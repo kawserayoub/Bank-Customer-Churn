@@ -5,7 +5,7 @@ from sklearn.preprocessing import MinMaxScaler
 import logging
 
 # Load the trained model
-model = load_model('churn.keras')
+model = load_model('streamlit/churn.keras')
 
 # Configure logging
 logging.basicConfig(
