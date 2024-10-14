@@ -89,8 +89,12 @@ if submit_button:
         prediction = model.predict(input_df)
         prediction = (prediction > 0.5).astype(int)
 
-        # Output the prediction result
-        if prediction == 1:
-            st.write('This customer is at risk of churn.')
-        else:
-            st.write('This customer is not likely to churn.')
+        # Output the prediction result with box and emojis
+        with st.container():
+            if prediction == 1:
+                st.write('🚨 **Customer at risk of churn.**')
+                st.warning('Recommended: Review for retention strategies.')
+            else:
+                st.write('✅ **Customer retention likely.**')
+                st.success('No immediate action required.')
+
