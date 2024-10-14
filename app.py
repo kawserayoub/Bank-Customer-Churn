@@ -12,7 +12,7 @@ logging.basicConfig(
     filename='app.log',
     level=logging.INFO,
     format='%(asctime)s %(levelname)s %(message)s',
-    filemode='w'  # 'w' mode overwrites the file each time the app is rerun
+    filemode='w' 
 )
 
 # Function to preprocess user input
