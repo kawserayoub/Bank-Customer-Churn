@@ -1,2 +1,2 @@
-2024-10-14 22:58:54,488 WARNING From C:\EC Utbildning\Customer-Churn-Prediction\env\Lib\site-packages\keras\src\backend\common\global_state.py:82: The name tf.reset_default_graph is deprecated. Please use tf.compat.v1.reset_default_graph instead.
+2024-10-14 23:17:11,912 WARNING From C:\EC Utbildning\Customer-Churn-Prediction\env\Lib\site-packages\keras\src\backend\common\global_state.py:82: The name tf.reset_default_graph is deprecated. Please use tf.compat.v1.reset_default_graph instead.
 
