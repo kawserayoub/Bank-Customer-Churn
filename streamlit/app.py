@@ -40,48 +40,21 @@ def preprocess_input(data):
 # Header for the app
 st.title('Bank Customer Churn Prediction')
 
-# Add explanation for credit score ranges and how the app works
-with st.expander("Click here to learn more about the fields", expanded=False):
-    st.markdown("""
-    **Credit Score**:
-    - Poor credit: 300 to 579
-    - Fair credit: 580 to 669
-    - Good credit: 670 to 739
-    - Very good credit: 740 to 799
-    - Excellent credit: 800 to 850
-
-    **Country**: The country the customer belongs to.
-
-    **Gender**: Male or Female.
-
-    **Age**: The customer's age.
-
-    **Balance**: The account balance of the customer.
-
-    **Products Owned**: The number of bank products the customer has purchased.
-
-    **Credit Card**: Whether the customer owns a credit card (Yes/No).
-
-    **Active Member**: Whether the customer is considered an active bank member (Yes/No).
-
-    **Estimated Salary**: The customer's estimated annual salary.
-    """)
-
 # Create a form to enter customer details
 with st.form("churn_form"):
     col1, col2 = st.columns(2)
 
     with col1:
-        credit_score = st.number_input('Credit Score (300-850)', min_value=300, max_value=850, value=300, help="Enter the customer's credit score. Range: 300 (Poor) to 850 (Excellent)")
+        credit_score = st.number_input('Credit Score (300-850)', min_value=300, max_value=850, value=300, help="Range: 300 (Poor) to 850 (Excellent)")
         country = st.selectbox('Country', ['Select', 'France', 'Germany', 'Spain'], help="Select the customer's country.")
         gender = st.selectbox('Gender', ['Select', 'Male', 'Female'], help="Select the customer's gender.")
-        balance = st.number_input('Balance', min_value=0.0, value=0.0, help="Enter the customer's account balance.")
+        balance = st.number_input('Balance (€)', min_value=0.0, value=0.0, help="Enter the customer's account balance (€).")
 
     with col2:
-        estimated_salary = st.number_input('Estimated Salary', min_value=0.0, value=0.0, help="Enter the customer's estimated annual salary.")
+        estimated_salary = st.number_input('Estimated Salary (€)', min_value=0.0, value=0.0, help="Enter the customer's estimated annual salary (€).")
         age = st.number_input('Age', min_value=18, max_value=100, value=18, help="Enter the customer's age.")
         tenure = st.number_input('Years with Bank', min_value=0, max_value=10, value=0, help="How many years has the customer been with the bank?")
-        num_of_products = st.number_input('Products Owned', min_value=1, max_value=4, value=1, help="How many products has the customer purchased?")
+        num_of_products = st.number_input('Products Owned', min_value=1, max_value=4, value=1, help="Includes: credit cards, savings accounts, loans, or investments.")
 
     # Yes/No questions with simplified labels
     has_cr_card = st.selectbox('Has Credit Card?', ['Select', 'No', 'Yes'], help="Does the customer own a credit card?")
