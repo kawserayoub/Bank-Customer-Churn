@@ -1,0 +1,5 @@
+2024-10-16 14:51:33,383 WARNING From C:\EC Utbildning\Customer-Churn-Prediction\env\Lib\site-packages\keras\src\backend\common\global_state.py:82: The name tf.reset_default_graph is deprecated. Please use tf.compat.v1.reset_default_graph instead.
+
+2024-10-16 14:52:12,187 INFO Preprocessed input data:    credit_score   balance  estimated_salary  age  tenure  num_of_products  has_cr_card  is_active_member  country_Germany  country_Spain  gender_Male
+0           1.0  0.398568           0.49999   45       7                4            1                 1                0              0            0
+2024-10-16 14:52:12,295 INFO Raw model prediction: [[1.]]

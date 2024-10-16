@@ -1,11 +1,12 @@
 import streamlit as st
 import pandas as pd
 from tensorflow.keras.models import load_model
-from sklearn.preprocessing import MinMaxScaler
 import logging
+import joblib
 
-# Load the trained model
-model = load_model('streamlit/churn.keras')
+# Load the trained model and scaler
+model = load_model('streamlit/bank_churn.keras')
+scaler = joblib.load('streamlit/minmax_scaler.pkl')
 
 # Configure logging
 logging.basicConfig(
@@ -31,9 +32,10 @@ def preprocess_input(data):
 
     data = data[expected_columns]
 
-    scaler = MinMaxScaler()
     cols_to_scale = ['credit_score', 'balance', 'estimated_salary']
-    data[cols_to_scale] = scaler.fit_transform(data[cols_to_scale])
+    
+    # Apply scaling using the pre-fitted scaler
+    data[cols_to_scale] = scaler.transform(data[cols_to_scale])
 
     return data
 
@@ -85,11 +87,17 @@ if submit_button:
         # Preprocess the input data
         input_df = preprocess_input(input_data)
 
+        # Log input data for debugging
+        logging.info(f'Preprocessed input data: {input_df}')
+        
         # Make prediction using the model
         prediction = model.predict(input_df)
+        logging.info(f'Raw model prediction: {prediction}')
+        
+        # Apply threshold
         prediction = (prediction > 0.5).astype(int)
 
-        # Output the prediction result with box and emojis
+        # Output the prediction result
         with st.container():
             if prediction == 1:
                 st.write('🚨 **Customer at risk of churn.**')
@@ -97,4 +105,3 @@ if submit_button:
             else:
                 st.write('✅ **Customer retention likely.**')
                 st.success('No immediate action required.')
-
