@@ -16,6 +16,9 @@ logging.basicConfig(
     filemode='w' 
 )
 
+# Set pandas display options to show all columns in the log
+pd.set_option('display.max_columns', None)
+
 # Function to preprocess user input
 def preprocess_input(data):
     data = pd.DataFrame(data, index=[0])
@@ -26,16 +29,22 @@ def preprocess_input(data):
         'has_cr_card', 'is_active_member', 'country_Germany', 'country_Spain', 'gender_Male'
     ]
 
+    # Ensure all expected columns exist in the input data
     for col in expected_columns:
         if col not in data.columns:
             data[col] = 0
 
+    # Order columns as expected by the model
     data = data[expected_columns]
 
-    cols_to_scale = ['credit_score', 'balance', 'estimated_salary']
+    cols_to_scale = ['credit_score', 'balance', 'estimated_salary']  
+
+    scaled_data = scaler.transform(data[cols_to_scale])
     
-    # Apply scaling using the pre-fitted scaler
-    data[cols_to_scale] = scaler.transform(data[cols_to_scale])
+    data[cols_to_scale] = scaled_data
+
+    # Manually ensure balance is kept within the range 0 to 1 after scaling
+    data['balance'] = data['balance'].clip(0, 1)
 
     return data
 
@@ -83,16 +92,21 @@ if submit_button:
             'has_cr_card': 1 if has_cr_card == 'Yes' else 0,
             'is_active_member': 1 if is_active_member == 'Yes' else 0
         }
+        
+        # Log the raw input data for debugging before preprocessing
+        logging.info(f'Raw production input data: {input_data}')
 
         # Preprocess the input data
         input_df = preprocess_input(input_data)
 
-        # Log input data for debugging
-        logging.info(f'Preprocessed input data: {input_df}')
-        
+        # Log the full preprocessed input dataframe
+        logging.info(f'Preprocessed input data:\n{input_df}')
+
         # Make prediction using the model
         prediction = model.predict(input_df)
-        logging.info(f'Raw model prediction: {prediction}')
+
+        # Log raw prediction probability for debugging
+        logging.info(f'Raw model probability: {prediction}') 
         
         # Apply threshold
         prediction = (prediction > 0.5).astype(int)
