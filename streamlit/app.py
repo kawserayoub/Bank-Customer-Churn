@@ -5,7 +5,7 @@ import logging
 import joblib
 
 # Load the trained model and scaler
-model = load_model('streamlit/bank_churn.keras')
+model = load_model('streamlit/Approach_2.keras')
 scaler = joblib.load('streamlit/minmax_scaler.pkl')
 
 # Configure logging
